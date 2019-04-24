@@ -1,10 +1,10 @@
 const socket = new WebSocket('ws://192.168.2.108:2001')
 
 const image = document.getElementById('image')
-const buttonUpload = document.getElementById('upload')´
+const buttonUpload = document.getElementById('upload')
 
 const options = {
-  step: 1, // ?
+  step: 1,
   palette: [[0, 0, 0], [255, 255, 255]],
   algorithm: 'atkinson'
 }
