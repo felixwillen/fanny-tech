@@ -1,0 +1,47 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+button {
+  display: block;
+  box-sizing: border-box;
+  width: 400px;
+  height: 50px;
+  cursor: pointer;
+}
+
+
+#image-container {
+  display: block;
+  box-sizing: border-box;
+  width: 400px;
+  height: 300px;
+  padding: 1em;
+  font-size: 1em;
+  color: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+#file {
+  display: block;
+  box-sizing: border-box;
+  width: 400px;
+  height: 50px;
+  padding: 1em;
+  font-size: 1em;
+  color: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}

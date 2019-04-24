@@ -1,30 +1,30 @@
 const path = require('path')
-const fs = require('fs') // whats that?
-const express = require('express') // serve static files
-const WebSocket = require('ws') // creates bidirectional connection client <-> server
-const epd = require('epd4in2') // libery for epaper screen
+const fs = require('fs')
+const express = require('express')
+const WebSocket = require('ws')
+const epd = require('epd4in2')
 
-const app = express() // creates express app
-const port = 2000 // asign port
+const app = express()
+const port = 2000
 
-app.use('/', express.static(path.join(__dirname, 'publuc'))) // express root
-app.listen(port) // use asigned port
+app.use('/', express.static(path.join(__dirname, 'publuc')))
+app.listen(port)
 
-const wss = new WebSocket.Server({ port: 2001 }) // create websocket server on por 2001
+const wss = new WebSocket.Server({ port: 2001 })
 
 wss.on('connection', ws => {
-  ws.on('message', message => { // sending and receiving data
+  ws.on('message', message => {
     save(message)
   })
 })
 
-const dir = path.join(__dirname, 'archive') //create archive
+const dir = path.join(__dirname, 'archive')
 
 function save(base64) {
-  const data = base64.replace(/^data:image\/png;base64,/, '') // remove part of array because info not needed
-  const timestamp = Date.now() // create timestamp
+  const data = base64.replace(/^data:image\/png;base64,/, '')
+  const timestamp = Date.now()
   
-  fs.writeFile(`${ dir }/${ timestamp }.png`, data, 'base64', err => { // save .png file in archive with timestamp as file name
+  fs.writeFile(`${ dir }/${ timestamp }.png`, data, 'base64', err => {
     if (err) console.log(err)
     console.log(`${ timestamp }.png saved^^`)
     display()
@@ -36,15 +36,15 @@ function display() {
 
   const files = []
   read.forEach(file => {
-    if (file.endsWith('.png')) files.push(file) // if png file created push to screen
+    if (file.endsWith('.png')) files.push(file)
   })
-  refreshDisplay(`${ dir }/${ files[files.length - 1] }`) // why -1?
+  refreshDisplay(`${ dir }/${ files[files.length - 1] }`)
 }
 
 async function refreshDisplay(path) {
   await epd.init()
 
-  const img = epd.gd.createFromFile(path) // load img if its dithered
+  const img = epd.gd.createFromFile(path)
  
   await epd.displayImageBuffer(img)
   await epd.sleep()
