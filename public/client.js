@@ -1,35 +1,35 @@
-const socket = new WebSocket('ws://192.168.2.108:2001') // create another websocket? 1 for answering the other?
+const socket = new WebSocket('ws://192.168.2.108:2001')
 
-const image = document.getElementById('image') // gets image from html
-const buttonUpload = document.getElementById('upload') // get uplaod button
+const image = document.getElementById('image')
+const buttonUpload = document.getElementById('upload')´
 
 const options = {
   step: 1, // ?
-  palette: [[0, 0, 0], [255, 255, 255]], // color for dither, only black and white
-  algorithm: 'atkinson' // choose algorithm
+  palette: [[0, 0, 0], [255, 255, 255]],
+  algorithm: 'atkinson'
 }
 
-const ditherjs = new DitherJS(options) // create dither with defined options
+const ditherjs = new DitherJS(options)
 
 buttonUpload.addEventListener('click', () => {
-  const canvas = document.getElementsByTagName('canvas')[0] // creates canvas and send to server ?!
+  const canvas = document.getElementsByTagName('canvas')[0]
   socket.send(canvas.toDataURL())
 })
 
 function handle() {
-  const file = document.querySelector('input[typer=file]').files[0] // choose first file?
+  const file = document.querySelector('input[typer=file]').files[0]
   const reader = new FileReader()
 
   if (file) {
-    reader.readAsDataURL(file) // if file is there
+    reader.readAsDataURL(file)
   }
 
-  reader.addEventListener('load', () => { // load file
+  reader.addEventListener('load', () => {
     image.src = reader.result 
   })
 }
 
-image.addEventListener('load', () => { // dither the loaded file
+image.addEventListener('load', () => {
   ditherjs.dither(image, options)
 
 })
